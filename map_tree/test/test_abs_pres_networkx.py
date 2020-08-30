@@ -82,8 +82,22 @@ class TestAbsencePresence(unittest.TestCase):
         test_matrix = make_abs_pres_networkx.get_preordered_matrix(fake_families, fake_genomes, fake_order)
         assert test_matrix == true_matrix
 
+    def test_preordered_fail(self):
+        fake_families = {"1_test": {"Cluster_1", "Cluster_2", "Cluster_3"}, "2_test": {"Cluster_4", "Cluster_5"}}
+        fake_genomes = {"Test_org_1": {"Cluster_1"}, "Test_org_2": {"Cluster_3", "Cluster_4"},
+                        "Test_org_3": {"Cluster_5"}}
+        fail_order = ["2", "1", "3"]
+        with self.assertRaisesRegex(ValueError, """Length of family order list must match amount of families.
+        Amount of families: 2 Length of family order list: 3"""):
+            fail_matrix = make_abs_pres_networkx.get_preordered_matrix(fake_families, fake_genomes, fail_order)
+
     def test_extract_order(self):
         order_file = pathlib.Path(self.base_dir) / "test_order"
         true_order = ["5", "4", "1", "2", "3"]
         extract_order = make_abs_pres_networkx.parse_family_order(order_file)
         assert extract_order == true_order
+
+    def test_order_fail(self):
+        fail_file = pathlib.Path(self.base_dir) / "fail_order"
+        with self.assertRaisesRegex(ValueError, "Family order list contains duplicates: 4"):
+            extract_fail = make_abs_pres_networkx.parse_family_order(fail_file)

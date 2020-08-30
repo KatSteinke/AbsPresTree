@@ -206,7 +206,17 @@ def parse_family_order(order_file: pathlib.Path) -> List[str]:
     """
     with open(order_file, "r") as family_order:
         family_numbers = family_order.readline().rstrip().split(",")
+    # sanity check: are there duplicates in this? - TODO: remove if it bloats code too much
+    numbers_seen = set()
+    duplicates = []
+    for number in family_numbers:
+        if number in numbers_seen:
+            duplicates.append(number)
+        numbers_seen.add(number)
+    if duplicates:
+        raise ValueError("Family order list contains duplicates: {}".format(", ".join(duplicates)))
     return family_numbers
+
 
 def get_preordered_matrix(families_with_names: Dict[str, Set[str]], clusters_in_genomes: Dict[str, Set[str]],
                           family_order: List[str]) -> str:
@@ -223,6 +233,9 @@ def get_preordered_matrix(families_with_names: Dict[str, Set[str]], clusters_in_
     # get matrix as above, but sort by list rather than family names
     families_clusters = OrderedDict()
     families_by_order = []
+    if not len(families_with_names) == len(family_order):
+        raise ValueError("""Length of family order list must match amount of families.
+        Amount of families: {} Length of family order list: {}""".format(len(families_with_names), len(family_order)))
     # for each number, in the order given in the file
     for family_number in family_order:
         # add all families from the families_with_names list that start with the number + "_"
