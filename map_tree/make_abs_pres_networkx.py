@@ -244,11 +244,9 @@ def get_preordered_matrix(families_with_names: Dict[str, Set[str]], clusters_in_
     for family in families_by_order:
         families_clusters[family] = [len(clusters.intersection(families_with_names[family]))
                                      for genomes, clusters in sorted(clusters_in_genomes.items())]
-    # TODO: make sure genomes still match lists
     absence_presence_df = pd.DataFrame(data=families_clusters, index=sorted(clusters_in_genomes.keys()))
     absence_presence_matrix = "#NAMES" + absence_presence_df.to_csv()
     return absence_presence_matrix
-
 
 
 if __name__ == "__main__":

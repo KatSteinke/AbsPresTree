@@ -49,8 +49,8 @@ def make_cluster_tree(tree_file: str, matrix: str, out_file: str, outgroup: Opti
         node.set_style(my_node_style)
 
         if node.is_leaf():
-            # add names in larger font
-            species_name = AttrFace("name", fsize=12)
+            # add names in larger font + italics
+            species_name = AttrFace("name", fsize=12, fstyle="italic")
             add_face_to_node(species_name, node, column=0, position="branch-right")
             # add absence/presence matrix
             for i, value in enumerate(getattr(node, "profile", [])):
