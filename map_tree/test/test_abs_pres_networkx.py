@@ -81,3 +81,9 @@ class TestAbsencePresence(unittest.TestCase):
         true_matrix = "#NAMES,2_test,1_test\nTest_org_1,0,1\nTest_org_2,1,1\nTest_org_3,1,0\n"
         test_matrix = make_abs_pres_networkx.get_preordered_matrix(fake_families, fake_genomes, fake_order)
         assert test_matrix == true_matrix
+
+    def test_extract_order(self):
+        order_file = pathlib.Path(self.base_dir) / "test_order"
+        true_order = ["5", "4", "1", "2", "3"]
+        extract_order = make_abs_pres_networkx.parse_family_order(order_file)
+        assert extract_order == true_order

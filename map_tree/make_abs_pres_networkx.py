@@ -195,6 +195,19 @@ def get_absence_presence_matrix(families_with_names: Dict[str, Set[str]], cluste
     return absence_presence_matrix
 
 
+def parse_family_order(order_file: pathlib.Path) -> List[str]:
+    """Extract the desired order of families from a file listing family numbers
+    separated by commas on a single line.
+    Arguments:
+        order_file: the path to the file
+
+    Returns:
+        The order of families in a list.
+    """
+    with open(order_file, "r") as family_order:
+        family_numbers = family_order.readline().rstrip().split(",")
+    return family_numbers
+
 def get_preordered_matrix(families_with_names: Dict[str, Set[str]], clusters_in_genomes: Dict[str, Set[str]],
                           family_order: List[str]) -> str:
     """Create an absence/presence matrix for a given set of families in a given
@@ -280,10 +293,8 @@ if __name__ == "__main__":
     # generate matrix
     # if families are to be in specific order, find and apply
     if family_order:
-        with open(family_order, "r"):
-            # TODO: specify file format! Does it need to be a oneliner?
-            order_of_families = family_order.readline().rstrip().split(",") # TODO: move to small external function for testability?
-            abs_pres_matrix = get_preordered_matrix(named_families, genomes_to_clusters, order_of_families)
+        order_of_families = parse_family_order(pathlib.Path(family_order).resolve())
+        abs_pres_matrix = get_preordered_matrix(named_families, genomes_to_clusters, order_of_families)
     # otherwise cluster as networkx does
     else:
         abs_pres_matrix = get_absence_presence_matrix(named_families, genomes_to_clusters)
