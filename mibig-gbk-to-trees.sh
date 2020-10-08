@@ -22,8 +22,23 @@ base_dir=~/Documents/work/DTU/bioengineering10/test_cleaned_script
 accessions="curated-tiny"
 out_tree="matrix_tree.png"
 outgroups=""
-while getopts b:a:t:g: option; do
+
+usage="$(basename "$0") [-h] [-b -a -t -g] -- download genomes from a list of accessions, run antiSMASH and BiG-SCAPE to detect BGCs, and visualize absence/presence of these in an autoMLST-generated tree
+
+where:
+	-h show this help text
+	-b base directory to generate files in
+	-a file listing accessions to download (one accession per line)
+	-t name of the tree file to output
+	-g outgroup(s) for the tree (if more than one, separate by spaces and wrap the entire list in double quotes)
+
+"
+
+while getopts hb:a:t:g: option; do
 	case "$option" in
+		h) echo "$usage"
+		   exit
+		   ;;
 		b) base_dir=$(realpath ${OPTARG});;
 		a) accessions=$(realpath ${OPTARG});;
 		t) out_tree=${OPTARG};;
@@ -42,7 +57,7 @@ if [[ ! -f $accessions ]]; then
 fi
 
 cd $base_dir
-# download all the files - now hopefully without stopping for broken ones
+# download all the files without stopping for broken ones
 echo "Downloading files"
 for accession in $(cat $accessions); do
     $general_env/ncbi-acc-download -e all $accession
