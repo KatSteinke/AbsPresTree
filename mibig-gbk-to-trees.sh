@@ -16,16 +16,18 @@ antismash_base=~/Documents/antismash-dmz_markers
 abs_pres=~/Documents/PycharmProjects/bacillus_job
 
 
-# arguments: base_dir, accessions, out_tree
+# arguments: base_dir, accessions, out_tree, outgroups
 
 base_dir=~/Documents/work/DTU/bioengineering10/test_cleaned_script
 accessions="curated-tiny"
 out_tree="matrix_tree.png"
-while getopts b:a:t: option; do
+outgroups=""
+while getopts b:a:t:g: option; do
 	case "$option" in
 		b) base_dir=$(realpath ${OPTARG});;
 		a) accessions=$(realpath ${OPTARG});;
 		t) out_tree=${OPTARG};;
+		g) outgroups="--outgroup ${OPTARG}";;
 	esac
 done
 
@@ -77,7 +79,6 @@ echo "Creating absence/presence matrix"
 cd ../bigscape-results/network_files/
 # find results directory by unique identifier
 cd $(find -name "*_$bigscape_id*" -type d)
-# TODO: keep hardcoded outgroup?
+
 network_matrix=$($networkx_env/python $abs_pres/map_tree/make_abs_pres_networkx.py .)
-$ete_env/python $abs_pres/map_tree/draw_cluster_tree.py $base_dir/raxmlpart.txt.treefile "$network_matrix" $base_dir/$out_tree 
-#--outgroup Bacillus_megaterium_NBRC_15308__ATCC_14581 Bacillus_cereus_ATCC_14579
+$ete_env/python $abs_pres/map_tree/draw_cluster_tree.py $base_dir/raxmlpart.txt.treefile "$network_matrix" $base_dir/$out_tree $outgroups
