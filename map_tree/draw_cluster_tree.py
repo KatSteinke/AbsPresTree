@@ -22,8 +22,7 @@ def make_cluster_tree(tree_file: str, matrix: str, out_file: str, outgroup: Opti
 
     Arguments:
         tree_file: the name of the file containing the tree to annotate
-        matrix:    either a tab-separated absence/presence matrix, or the name
-                   of a file containing such a matrix.
+        matrix:    a comma- or tab-separated absence/presence matrix
         out_file:  the name under which to save the resulting image
         outgroup:  the organism(s) to use as an outgroup, if any
     """

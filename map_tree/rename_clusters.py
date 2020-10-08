@@ -10,7 +10,7 @@ else:
 
 for entry in antismash_dir.iterdir():
     if entry.is_dir():
-        for result in entry.iterdir():  # TODO: this looks so ugly
+        for result in entry.iterdir():
             if result.is_file():
                 # if the name has only digits and "region"
                 plain_name = re.search(r"^\d{1,7}\.region\d{3}\.gbk", result.name)
