@@ -10,7 +10,8 @@ general_env=/home/kat/.virtualenvs/bioeng_env/bin
 networkx_env=/home/kat/.virtualenvs/networkx-env/bin/
 
 # script juggling
-general_base=~/Documents/work/DTU/bioengineering10
+bigscape_base=~/Documents/work/DTU/bioengineering10/BiG-SCAPE-master
+pfam_base=~/Documents/work/DTU/bioengineering10/Pfam-A
 automlst_base=~/Documents/autoMLST/ziemertlab-automlst-7b2b5a9a8961
 antismash_base=~/Documents/antismash-dmz_markers
 abs_pres=~/Documents/PycharmProjects/bacillus_job
@@ -75,7 +76,7 @@ for gbk_file in $(ls ..); do
         # must start with LOCUS and end with a DD-MMM-YYYY date
         if [[ "$(head -n 1 ../$gbk_file)" =~ ^LOCUS.*[0-9]{2}-[A-Z]{3}-[0-9]{4}$ ]]; then
 	    echo "Fixing strain naming for $gbk_file"
-            $general_env/python3 $general_base/rename_strainless_organisms.py "../$gbk_file" --overwrite
+            $general_env/python3 $abs_pres/utility/rename_strainless_organisms.py "../$gbk_file" --overwrite
             echo "Running antiSMASH on $gbk_file"
             $antismash_env/python3 $antismash_base/run_antismash.py --data /opt/antismash/data --cpus 4 --minimal "../$gbk_file" 
         fi 
@@ -85,7 +86,7 @@ done
 echo "Running Bigscape"
 # generate unique prefix for run
 bigscape_id=$(uuidgen)
-$general_env/python3 $general_base/BiG-SCAPE-master/bigscape.py -i . -o ../bigscape-results --pfam_dir $general_base/Pfam-A --mibig --label $bigscape_id
+$general_env/python3 $bigscape_base/bigscape.py -i . -o ../bigscape-results --pfam_dir $pfam_base --mibig --label $bigscape_id
 # run autoMLST
 echo "Creating tree"
 $automlst_env/python $automlst_base/simplified_wrapper.py ".."
