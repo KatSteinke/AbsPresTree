@@ -2,24 +2,24 @@
 
 set -e
 
-# virtualenv juggling
-antismash_env=/home/kat/.virtualenvs/antismash-dmz_markers/bin
-automlst_env=/home/kat/.virtualenvs/automlst_env/bin
-ete_env=/home/kat/.virtualenvs/ete3_test/bin
-general_env=/home/kat/.virtualenvs/bioeng_env/bin
-networkx_env=/home/kat/.virtualenvs/networkx-env/bin/
+# virtualenvs - replace placeholders with own virtualenvs
+antismash_env=/path/to/.virtualenvs/antismash-dmz_markers/bin
+automlst_env=/path/to/.virtualenvs/automlst_env/bin
+ete_env=/path/to/.virtualenvs/ete3_env/bin
+general_env=/path/to/.virtualenvs/base_env/bin
+networkx_env=/path/to/.virtualenvs/networkx_env/bin/
 
-# script juggling
-bigscape_base=~/Documents/work/DTU/bioengineering10/BiG-SCAPE-master
-pfam_base=~/Documents/work/DTU/bioengineering10/Pfam-A
-automlst_base=~/Documents/autoMLST/ziemertlab-automlst-7b2b5a9a8961
-antismash_base=~/Documents/antismash-dmz_markers
-abs_pres=~/Documents/PycharmProjects/bacillus_job
+# scripts - replace placeholders with own script locations
+bigscape_base=/path/to/BiG-SCAPE-master
+pfam_base=/path/to/Pfam-A
+automlst_base=/path/to/autoMLST/ziemertlab-automlst-7b2b5a9a8961
+antismash_base=/path/to/antismash-dmz_markers
+abs_pres=/path/to/absprestree
 
 
 # arguments: base_dir, accessions, out_tree, outgroups
 
-base_dir=~/Documents/work/DTU/bioengineering10/test_cleaned_script
+base_dir=/path/to/default/dir
 accessions="curated-tiny"
 out_tree="matrix_tree.png"
 outgroups=""
