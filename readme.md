@@ -1,4 +1,4 @@
-#Absence/Presence Tree script
+# Absence/Presence Tree script
 -----------------------------
 
 This script generates a phylogenetic tree, as well as a matrix showing absence/presence of biosynthetic
@@ -7,7 +7,7 @@ It takes a list of accession numbers of genomes, predicts biosynthetic gene clus
 antiSMASH, groups these BGCs into families with BiG-SCAPE and NetworkX, and visualizes absence/presence
 of these families for each organism alongside a phylogenetic tree with autoMLST.
 
-##Prerequisites
+## Prerequisites
 The following programs need to be installed:
 * [ncbi-acc-download](https://github.com/kblin/ncbi-acc-download/tree/master/ncbi_acc_download)
 * [BiG-SCAPE](https://git.wageningenur.nl/medema-group/BiG-SCAPE/)
@@ -19,25 +19,25 @@ given in `requirements-ete-env.txt`, `requirements-general-env.txt`, and `requir
 Beyond this, virtual environments for autoMLST and antiSMASH are also required; requirements for these 
 can be found in their respective repositories.
 
-##Setup
+## Setup
 Before running mibig-gbk-to-trees.sh for the first time, several placeholders need to be replaced. These are:
-###Virtual environments
+### Virtual environments
 * `/path/to/.virtualenvs/antismash-dmz_markers/bin`: replace with path to antiSMASH virtualenv
 * `/path/to/.virtualenvs/automlst_env/bin`: replace with path to autoMLST virtualenv
 * `/path/to/.virtualenvs/ete3_env/bin`: replace with path to virtualenv specified in `requirements-ete-env.txt`
 * `/path/to/.virtualenvs/base_env/bin`: replace with path to virtualenv specified in `requirements-general-env.txt`
 * `/path/to/.virtualenvs/networkx_env/bin/`: replace with path to virtualenv specified in `requirements-networkx-env.txt`
-###Programs
+### Programs
 * `/path/to/BiG-SCAPE-master`: replace with path to dir containing BiG-SCAPE
 * `/path/to/Pfam-A`: replace with path to PFAM directory used for BiG-SCAPE (normally, but not always, in BiG-SCAPE dir)
 * `/path/to/autoMLST/ziemertlab-automlst-7b2b5a9a8961`: replace with path to dir containing autoMLST fork
 * `/path/to/antismash-dmz_markers`: replace with path to dir containing antiSMASH fork
 * `/path/to/absprestree`: replace with path to dir containing this script
-###Directories
+### Directories
 * `/path/to/default/dir`: replace with path to the directory you wish to run the script in by default
 If desired, you can also change `curated-accessions-tiny` to a list of accessions you wish to run by default.
 
-##Running the script
+## Running the script
 To run the script with default settings, simply run `bash mibig-gbk-to-trees.sh`. All that is required is a plain
 text file listing accession numbers of the genomes you wish to generate an absence/presence matrix and tree for, one per 
 line, under the name set as a default in the default base directory.
